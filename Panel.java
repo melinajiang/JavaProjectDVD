@@ -42,7 +42,7 @@ public class Panel {
 		
 		
 		
-		//电影图片
+片
 		JLabel label1 = new JLabel("奇异博士");
 		label1.setBounds(30,40,96,141);
 		label1.setFont(new Font("",Font.BOLD,13));
