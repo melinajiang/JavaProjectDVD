@@ -8,6 +8,7 @@ import java.io.DataInputStream;
 	import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -35,9 +36,9 @@ public class DVDServer {
 				serverSocket =new ServerSocket(SERVER_PORT);
 				client=serverSocket.accept();
 				System.out.println("success connection!");
-				ServerThread serverThread=new ServerThread(client);
-				Thread thread=new Thread(serverThread);
-				thread.start();
+				ServerThread serverThread1=new ServerThread(client);
+				Thread threadPic=new Thread(serverThread1);
+				threadPic.start();
 				serverSocket.close();
 				
 			}
@@ -58,6 +59,8 @@ public class DVDServer {
 				DataOutputStream outputStream = null;
 				pic pic=new pic();
 				pictures=pic.getPics();
+				String allName = pic.getAllName();
+				String allLength = pic.getAllLength();
 				try {
 					
 					outputStream =new DataOutputStream(new BufferedOutputStream(client.getOutputStream()));
@@ -65,11 +68,24 @@ public class DVDServer {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				
+				try {
+					outputStream.writeUTF(allLength);
+					outputStream.writeUTF(allName);
+				} catch (IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+					System.out.println("write head info wrong");
+				}
+				
+				
 				for (int i = 1; i < pictures.length; i++) {
 					
 					try {
 						fileInputStream=new FileInputStream(pictures[i]);
 						System.out.println("find one pic");
+						
 					} catch (FileNotFoundException e) {
 						// TODO Auto-generated catch block
 						System.out.println("pic not found");
@@ -77,14 +93,15 @@ public class DVDServer {
 					}
 					
 					System.out.println("ready to send pics");
-				
 					try {
 						sendPic(fileInputStream, outputStream, sendByte);
+						System.out.println("send pic success!!!");
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 						System.out.println("error");
 					}
+					
 					try {
 						fileInputStream.close();
 					} catch (IOException e) {
@@ -94,9 +111,63 @@ public class DVDServer {
 					}
 				}
 				System.out.println("already send all");
-			
+				/*
 				try {
-					//fileInputStream.close();
+					System.out.println("send comand.");
+					String command = "send all";
+					int size = command.length();
+					outputStream.writeInt (size);
+					outputStream.writeChars(command);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					System.out.println("wrong writing!");
+				}
+				
+				try {
+					fileInputStream = new FileInputStream("/Users/jiangruishan/Documents/file/lan.docx");
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+}
+
+
+		System.out.println("start to send file");
+				try {
+
+					fileInputStream = new FileInputStream("/Users/jiangruishan/Documents/file/lan.docx");
+
+					System.out.println("open the file success!");
+
+					} catch (FileNotFoundException e1) {
+
+					// TODO Auto-generated catch block
+
+					e1.printStackTrace();
+
+					System.out.println("fail in opening file");
+
+					}
+
+
+					try {
+
+					System.out.println("ready to send");
+					sendFile(fileInputStream, outputStream, sendByte);
+					System.out.println("send file success!");
+
+					} catch (IOException e1) {
+
+					// TODO Auto-generated catch block
+
+					e1.printStackTrace();
+
+					System.out.println("sendfile failed");
+
+}
+*/
+				try {
+					
 					outputStream.close();
 					client.close();
 				} catch (IOException e) {
@@ -105,54 +176,8 @@ public class DVDServer {
 					System.out.println("wrong closing");
 				}
 				
-				/*
-				for(int i=0;i<picName.length;i++){
-				try {
-						
-						fileInputStream = new FileInputStream(picName[i]);
-						
-					
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				
-				try {
-					System.out.println("hi");
-					outputStream =client.getOutputStream();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				byte[] sendByte=new byte[1024];
-				try {
-					sendPic(fileInputStream, outputStream, sendByte);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				try {
-					fileInputStream.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				picNum++;
-				}
-				try {
-					client.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				try {
-					outputStream.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			*/	
+
 				
 			}
 			
@@ -161,6 +186,7 @@ public class DVDServer {
 				while ((len=fileInputStream.read(sendByte))!=-1) {
 					System.out.println(len);
 					outputStream.write(sendByte,0,len);
+					waitIt();
 					//outputStream.flush();
 					if (len!=1024) {
 						byte[] b = new byte[1024 -len];  
@@ -168,6 +194,27 @@ public class DVDServer {
 					}
 				}
 			}
-			
+			public void  sendFile(FileInputStream fileInputStream,DataOutputStream outputStream,byte[] sendByte) throws IOException {
+
+				int len=0;
+
+				while ((len=fileInputStream.read(sendByte))!=-1) {
+
+				System.out.println(len);
+
+				outputStream.write(sendByte,0,len);
+
+				//outputStream.flush();
+
+				}
+
+				}
+			public boolean waitIt() {
+				int a=1;
+				for(int i=0;i<10;i++){
+					a=a*i;
+				}
+				return true;
+			}
 		}
 }
