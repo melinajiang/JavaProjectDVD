@@ -13,6 +13,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class DVDClient extends Socket{
     private static final String SERVER_IP ="127.0.0.1";
@@ -27,7 +29,7 @@ public class DVDClient extends Socket{
     private File[] pics;
     byte[] sendBytes=null;
     int count = 1024;
-    
+    HashMap< String, String> movieMap ;
     public DVDClient() throws UnknownHostException, IOException {
 		// TODO Auto-generated constructor stub
     	client=new Socket(SERVER_IP, SERVER_PORT1);
@@ -43,7 +45,7 @@ public class DVDClient extends Socket{
     
     //client get the pic send by server.
    public void recievePic() throws IOException{ 
-	   
+	  movieMap = new HashMap<String,String>();
 	  dataOutputStream=new DataOutputStream(client.getOutputStream());
 	  // dataOutputStream.writeUTF("sendpic");
 	  dataInputStream= new DataInputStream(new BufferedInputStream(client.getInputStream())); 
@@ -62,38 +64,53 @@ public class DVDClient extends Socket{
 			picLength[i]= Long.parseLong(len[i]);
 		}
 		
-	   for(int i=1;i<6;i++){ 
-		  
-		   File file = new File("/Users/jiangruishan/Documents/test");
-		   file = new File("/Users/jiangruishan/Documents/test/"+name[i-1]);
-		   if (file.exists()) {
-			  file.createNewFile();
+	   for(int i=1;i<picLength.length+1;i++){ 
+		   String directory = "/Users/jiangruishan/Documents/testDog";
+		   File file;
+		   file = new File(directory,name[i-1]);
+		   try {
+			if (!file.isDirectory()) {
+			file.getParentFile().mkdirs();
 		}
-		   else {
-			   file.createNewFile();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("create directory error!");
+		}
+		   try {
+			if (file.exists()) {
+			  file.delete();
+		}
+		} catch (Exception e) {
+			// TODO: handle exception 
+			System.out.println("delete error");
+		}
+		   
+		  try {
+			file.createNewFile();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("create file error!!!");
 		}
 		 
-	   	   fOutputStream=new FileOutputStream(file);
-	   	   
-	   	  
-	   	 int end;
-	   	   
-		   while(picLength[i-1]>0  ){
-			   
-			   		length= writeCount();
-			   		System.out.println(length);
-			   		if ((picLength[i-1]-length)<0) {
-			   			fOutputStream.write(sendBytes,0,(int)picLength[i-1]);
-					}
-			   		else {
-					fOutputStream.write(sendBytes,0,length);	
-					}
-					picLength[i-1]-=length;
-					
-		   }
-		   System.out.println("recieve one pic");
-		 
+		movieMap.put(name[i-1], file.getPath());
+	   	fOutputStream=new FileOutputStream(file);
+	   
+		while(picLength[i-1]>0  ){
+				   
+		   		length= writeCount();
+		   		System.out.println(length);
+		   		if ((picLength[i-1]-length)<0) {
+		   			fOutputStream.write(sendBytes,0,(int)picLength[i-1]);
+				}
+		   		else {
+				fOutputStream.write(sendBytes,0,length);	
+				}
+				picLength[i-1]-=length;			
 	   }
+			   System.out.println("recieve one pic");
+			 
+			 
+   }
 	   System.out.println("recieve all");
 	   
 	   System.out.println("ready to recieve file .");
@@ -122,23 +139,30 @@ public class DVDClient extends Socket{
 			   fOutputStream.write(sendBytes, 0, sz);
 
 			   }
+			   System.out.println("sucess write a file");
 	*/
 
-			 System.out.println("sucess write a file");
+			 
 			 dataInputStream.close();
 			 fOutputStream.close();
 			 client.close();
+			 for (Entry<String, String> entry : movieMap.entrySet()) {  
+				    System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue()); 
+				}  
 		}
    
-public int writeCount() throws IOException {
-	 int readCount = 0; // 已经成功读取的字节的个数
-  	  while (readCount < count) {
-  	   readCount += dataInputStream.read(sendBytes, readCount, count - readCount);
-  	  }
-	return readCount;
+	public int writeCount() throws IOException {
+		 int readCount = 0; // 已经成功读取的字节的个数
+	  	  while (readCount < count) {
+	  	   readCount += dataInputStream.read(sendBytes, readCount, count - readCount);
+	  	  }
+		return readCount;
+	}
+	
+	public  HashMap<String,String> getPath() {
+		return movieMap;
+	}
 }
-
-		}
 
 	
 

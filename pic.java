@@ -29,7 +29,12 @@ public class pic {
 	public pic() {
 		// TODO Auto-generated constructor stub
 		picFile=new File("/Users/jiangruishan/Documents/picture" );
-		pics=picFile.listFiles();
+		if (picFile.isDirectory()) {
+			pics=picFile.listFiles();
+		}
+		else {
+			System.out.println("wrong address!");
+		}
 		
 		 for(int i=0;i<pics.length;i++){
 				   System.out.println(" "+pics[i]);
