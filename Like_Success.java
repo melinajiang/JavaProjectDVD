@@ -9,12 +9,12 @@ package cn.edu.usst;
  *
  * @author asus
  */
-public class Rent_Success extends javax.swing.JFrame {
+public class Like_Success extends javax.swing.JFrame {
 
     /**
-     * Creates new form Rent_Success
+     * Creates new form Like_Success
      */
-    public Rent_Success() {
+    public Like_Success() {
         initComponents();
     }
 
@@ -27,18 +27,13 @@ public class Rent_Success extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton2 = new javax.swing.JButton();
         background = new javax.swing.JPanel();
         icon_cor = new javax.swing.JLabel();
         info_cor = new javax.swing.JLabel();
         yes = new javax.swing.JButton();
-        back = new javax.swing.JButton();
-
-        jButton2.setText("jButton2");
+        favorite = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBounds(new java.awt.Rectangle(0, 0, 0, 0));
-        setLocation(new java.awt.Point(0, 0));
         setPreferredSize(new java.awt.Dimension(330, 160));
 
         background.setBackground(new java.awt.Color(255, 255, 255));
@@ -46,7 +41,7 @@ public class Rent_Success extends javax.swing.JFrame {
         icon_cor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cn/edu/usst/tick2.jpg"))); // NOI18N
 
         info_cor.setFont(new java.awt.Font("微软雅黑", 0, 18)); // NOI18N
-        info_cor.setText("租赁成功");
+        info_cor.setText("收藏成功");
 
         yes.setText("确定");
         yes.addActionListener(new java.awt.event.ActionListener() {
@@ -55,10 +50,10 @@ public class Rent_Success extends javax.swing.JFrame {
             }
         });
 
-        back.setText("返回首页");
-        back.addActionListener(new java.awt.event.ActionListener() {
+        favorite.setText("收藏夹");
+        favorite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backActionPerformed(evt);
+                favoriteActionPerformed(evt);
             }
         });
 
@@ -70,14 +65,14 @@ public class Rent_Success extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(yes, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(favorite, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(backgroundLayout.createSequentialGroup()
                 .addGap(86, 86, 86)
                 .addComponent(icon_cor, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(info_cor)
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addContainerGap(123, Short.MAX_VALUE))
         );
         backgroundLayout.setVerticalGroup(
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,7 +86,7 @@ public class Rent_Success extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(yes)
-                    .addComponent(back))
+                    .addComponent(favorite))
                 .addGap(18, 18, 18))
         );
 
@@ -106,24 +101,24 @@ public class Rent_Success extends javax.swing.JFrame {
             .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setBounds(450, 250, 350, 200);
+        setBounds(400, 250, 353, 200);
     }// </editor-fold>//GEN-END:initComponents
 
     private void yesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yesActionPerformed
         // TODO add your handling code here:
         try{
-          Info_Page_new ipn = new Info_Page_new();  
-          this.setVisible(false);
-//          ipn.setVisible(true);
+            Info_Page_new ipn = new Info_Page_new();
+            this.setVisible(false);
+            //          ipn.setVisible(true);
         }catch(Exception e){
-            
+
         }
     }//GEN-LAST:event_yesActionPerformed
 
-    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
+    private void favoriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_favoriteActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_backActionPerformed
+
+    }//GEN-LAST:event_favoriteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -142,30 +137,29 @@ public class Rent_Success extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Rent_Success.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Like_Success.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Rent_Success.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Like_Success.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Rent_Success.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Like_Success.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Rent_Success.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Like_Success.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Rent_Success().setVisible(true);
+                new Like_Success().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton back;
     private javax.swing.JPanel background;
+    private javax.swing.JButton favorite;
     private javax.swing.JLabel icon_cor;
     private javax.swing.JLabel info_cor;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton yes;
     // End of variables declaration//GEN-END:variables
 }
