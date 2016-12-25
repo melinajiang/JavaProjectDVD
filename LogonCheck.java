@@ -19,36 +19,42 @@ public class LogonCheck {
 	public static ResultSet res = null;
 
 	List<Person> list = new ArrayList<Person>();
+	
+	  public LogonCheck() {
+		// TODO Auto-generated constructor stub
+		  Dao dao = new Dao();
+		 conn = dao.getConnection();
+	}
 
-	public Person Check(String name) throws SQLException {
-		Person p = null;
-		Dao dao = new Dao();
-		conn = dao.getConnection();
+	public String Check(String name) throws SQLException {
+		String pw = null;
+		//Dao dao = new Dao();
+		//conn = dao.getConnection();
 		stmt = conn.createStatement();
 		res = stmt.executeQuery("select * from person_info where name like"+"'"+name+"'");
-		
 		while(res.next()){
-			String str = res.getString(2);
-			//System.out.println(id);
-			 p = new Person(name,str);
-			
+			 pw = res.getString(2);
+		
 		}
-      return p;
+		return pw;
+	}
+	
+	public void register(Person person){
+		
+		String pname = person.getName();
+		
+		Dao dao = new Dao();
+		conn = dao.getConnection();
+		try {
+			stmt = conn.createStatement();
+			res = stmt.executeQuery("select * from person_info where name like");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
-	/*public static boolean check(String userStr,String passStr) throws SQLException {
-		
-		Dao dao = new Dao();
-		conn = dao.getConnection();
-		sql = conn.createStatement();
-		res = sql.executeQuery("select * from person_info where name="+userStr+"and password="+passStr);
-		if (res == null) {
-			return false;
-		}
-		return true;
-		
-	}*/
 	public Dvd finDvd(String dvdname){
 		Dvd dvd = null;
 		
@@ -80,7 +86,22 @@ public class LogonCheck {
 		try {
 			stmt = conn.createStatement();
 			//res = stmt.executeUpdate("delete * from dvd_info where dname like"+"'"+dvdname+"'");
-		    stmt.executeUpdate("delete from dvd_info where dname like"+"'"+dvdname+"'");
+		    //stmt.executeUpdate("delete from dvd_info where dname like"+"'"+dvdname+"'");
+			res =stmt.executeQuery("select * from dvd_info where dname like"+"'"+dvdname+"'");
+			while(res.next()){
+				String dintroduce  = res.getString(2);
+				String dactor  = res.getString(3);
+				String durl  = res.getString(4);
+				int i = res.getInt(5);
+				i--;
+				//System.out.println(dintroduce);
+				
+				//stmt.executeUpdate("insert into dvd_info(dname,dintroduce,dactor,durl,dcount) "
+				//		+ "values('"+dvdname+"','"+dintroduce+"'+'"+dactor+"','"+durl+"'+'"+i+"')");
+				stmt.executeUpdate("UPDATE dvd_info SET dcount="+i+" WHERE dname='"+dvdname+"'");
+				
+			}
+			
 		     
 			 System.out.println(dvdname+"该dvd已经被租借了");
 		} catch (SQLException e) {
@@ -88,5 +109,23 @@ public class LogonCheck {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public Boolean loginCheck(String name,String password) throws SQLException{
+		String pw =Check(name);
+		if(pw == null){
+			return false;
+		}else if(pw.equals(password)){
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	//register
+	public void register(String name,String password) throws Exception{
+		stmt = conn.createStatement();
+	    stmt.executeUpdate("insert into person_info(name,password) values('"+name+"','"+password+"')");
+	    System.out.println("register had successed");
 	}
 }
