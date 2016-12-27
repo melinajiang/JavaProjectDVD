@@ -5,6 +5,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+
+import java.awt.Button;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -17,7 +19,9 @@ public class Panel {
 
 	static JButton button1 ;
 	static JButton button2 ;
+	static JButton button3;
 	static JTextField text1 ;
+	static JTextField text2;
 	static JLabel label5;
 	static String loginName ;
 	static JFrame frm;
@@ -51,7 +55,19 @@ public class Panel {
 			    JLabel label6 = new JLabel("登陆");
 			    label6.setBounds(107,40,50,25);
 			    frame.getContentPane().add(label6);
-			   
+			    
+			    button3 = new JButton();
+			    button3.setText("确认");
+			    button3.setBounds(140,150,50,25);
+			    frame.getContentPane().add(button3);
+			    button3.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						
+					}
+				});
 			    
 			    
 			    text1.setHorizontalAlignment(JTextField.LEFT);
@@ -85,7 +101,44 @@ public class Panel {
 		button2.setText("注册");
 		button2.setBounds(550,0,50,25);
 		frm.getContentPane().add(button2);
+        button2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFrame frame2= new JFrame("zhuce");
+				frame2.setBounds(500,200,250,300);
+				frame2.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+			    frame2.setVisible(true);
+                frame2.setLayout(null);
+				
 
+			    JLabel label7 = new JLabel("注册");
+			    label7.setBounds(107,40,50,25);
+			    frame2.getContentPane().add(label7);
+			    
+			    
+			    text2.setHorizontalAlignment(JTextField.LEFT);
+			    text2.setBounds(60,70,120,30);
+			    frame2.getContentPane().add(text2);
+			    
+			    
+			    JPasswordField pwdText2= new JPasswordField();
+			    pwdText2.setText("mypassword");
+			    pwdText2.setEchoChar('*');
+			    pwdText2.setBounds(60,107,120,30);
+			    frame2.getContentPane().add(pwdText2);
+			
+			    
+			}
+		});
+		
+		
+		
+		
+		
+		
+		
+		
 		//修改后的文本
 		JLabel label3 = new JLabel("近期热映");
 		label3.setBounds(10,30,65,25);
