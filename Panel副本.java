@@ -5,7 +5,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-
 import java.awt.Button;
 import java.awt.Font;
 import java.awt.Frame;
@@ -15,15 +14,16 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 
 
-public class Panel {
+public class Panel{
 
-	static JButton button1 ;
-	static JButton button2 ;
+	static JButton button1;
+	static JButton button2;
 	static JButton button3;
-	static JTextField text1 ;
+	static JButton button4;
+	static JTextField text1;
 	static JTextField text2;
 	static JLabel label5;
-	static String loginName ;
+	static String loginName;
 	static JFrame frm;
 	public static void main(String[] args) {
 		
@@ -106,6 +106,7 @@ public class Panel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFrame frame2= new JFrame("zhuce");
+				text2 = new JTextField(); 
 				frame2.setBounds(500,200,250,300);
 				frame2.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 			    frame2.setVisible(true);
@@ -115,11 +116,12 @@ public class Panel {
 			    JLabel label7 = new JLabel("注册");
 			    label7.setBounds(107,40,50,25);
 			    frame2.getContentPane().add(label7);
-			    
-			    
+
+
 			    text2.setHorizontalAlignment(JTextField.LEFT);
 			    text2.setBounds(60,70,120,30);
 			    frame2.getContentPane().add(text2);
+			    text2.setVisible(true);
 			    
 			    
 			    JPasswordField pwdText2= new JPasswordField();
@@ -127,7 +129,13 @@ public class Panel {
 			    pwdText2.setEchoChar('*');
 			    pwdText2.setBounds(60,107,120,30);
 			    frame2.getContentPane().add(pwdText2);
-			
+                pwdText2.setVisible(true);
+			    
+			    button4 = new JButton();
+			    button4.setText("确认");
+			    button4.setBounds(140,150,50,25);
+			    frame2.getContentPane().add(button4);
+			    button4.setVisible(true);
 			    
 			}
 		});
@@ -165,7 +173,6 @@ public class Panel {
 		label1.setVerticalAlignment(JLabel.BOTTOM); 
 		frm.getContentPane().add(label1);
 		
-	
 		frm.setBounds(400,200,600,400);
 		frm.setVisible(true);
 		
