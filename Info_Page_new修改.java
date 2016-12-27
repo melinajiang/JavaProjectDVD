@@ -1,7 +1,10 @@
 package dvdSockets;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
+
+import com.usst.db.LogonCheck;
 
 /**
  *
@@ -9,10 +12,10 @@ import javax.swing.UIManager;
  */
 public class Info_Page_new修改 extends javax.swing.JFrame {
 	 static JLabel poster1;
-    /**
+	 String lo ;    /**
      * Creates new form Info_Page_new
      */
-    public Info_Page_new修改() {
+    public Info_Page_new修改(JFrame jFrame,String [] dvdInfo,LogonCheck logonCheck,String name,String text1) {
         
         jPanel1 = new javax.swing.JPanel();
         background = new javax.swing.JPanel();
@@ -34,7 +37,9 @@ public class Info_Page_new修改 extends javax.swing.JFrame {
         left = new javax.swing.JPanel();
         poster1 = new javax.swing.JLabel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(60, 0), new java.awt.Dimension(60, 0), new java.awt.Dimension(60, 32767));
-        initComponents();
+       
+        initComponents(jFrame,dvdInfo,logonCheck,name,text1);
+        //this.setVisible(false);
     }
 
     /**
@@ -44,7 +49,7 @@ public class Info_Page_new修改 extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents(JFrame jFrame,String [] dvdInfo,LogonCheck logonCheck,String name,String text1) {
 
        
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -91,12 +96,13 @@ public class Info_Page_new修改 extends javax.swing.JFrame {
         login.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         login.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                loginMouseEntered(evt);
+               // loginMouseEntered(evt);
             }
         });
         login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginActionPerformed(evt);
+            	
             }
         });
 
@@ -108,7 +114,9 @@ public class Info_Page_new修改 extends javax.swing.JFrame {
         back.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backActionPerformed(evt);
+            //rewrite backActionPerformed.
+               backActionPerformed(evt,jFrame);
+            	
             }
         });
 
@@ -139,7 +147,7 @@ public class Info_Page_new修改 extends javax.swing.JFrame {
         right.setBackground(new java.awt.Color(255, 255, 255));
 
         title.setFont(new java.awt.Font("微软雅黑", 1, 30)); // NOI18N
-        title.setText("影片标题");
+        title.setText(name);
 
         director.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         director.setText("导演：");
@@ -147,9 +155,9 @@ public class Info_Page_new修改 extends javax.swing.JFrame {
         cast.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         cast.setText("主演：");
 
-        name_D.setText("XXX");
+       // name_D.setText(dvdInfo[0]);
 
-        name_C.setText("YYY");
+       // name_C.setText(dvdInfo[1]);
 
         introduction.setFont(new java.awt.Font("微软雅黑", 0, 18)); // NOI18N
         introduction.setText("影片简介：");
@@ -158,6 +166,7 @@ public class Info_Page_new修改 extends javax.swing.JFrame {
         intro_Text.setRows(5);
         intro_Text.setBorder(null);
         intro_Text.setPreferredSize(new java.awt.Dimension(150, 110));
+       // intro_Text.setText(dvdInfo[2]);
         jScrollPane1.setViewportView(intro_Text);
 
         rent.setBackground(new java.awt.Color(255, 102, 0));
@@ -166,9 +175,17 @@ public class Info_Page_new修改 extends javax.swing.JFrame {
         rent.setText("立即租赁");
         rent.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         rent.setPreferredSize(new java.awt.Dimension(80, 25));
+      
         rent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rentActionPerformed(evt);
+            	lo = 主页panelTest.returnLoginName();
+            	if ((!(text1.equals("hi"))) || (!(lo.equals("hi")))) {
+					  rentActionPerformed(evt,logonCheck,name);
+					  System.out.println("success!");
+				}
+            	else {
+					System.out.println("have not login!");
+				}
             }
         });
 
@@ -301,8 +318,9 @@ public class Info_Page_new修改 extends javax.swing.JFrame {
         setBounds(300, 150, 621, 444);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void rentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentActionPerformed
+    private void rentActionPerformed(java.awt.event.ActionEvent evt,LogonCheck logonCheck,String dvdname) {//GEN-FIRST:event_rentActionPerformed
         // TODO add your handling code here:
+    	logonCheck.rentDvd(dvdname);
     }//GEN-LAST:event_rentActionPerformed
 
     private void likeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_likeActionPerformed
@@ -311,10 +329,13 @@ public class Info_Page_new修改 extends javax.swing.JFrame {
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         // TODO add your handling code here:
+    	主页panelTest.setLoginPage();
     }//GEN-LAST:event_loginActionPerformed
 
-    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
+    private void backActionPerformed(java.awt.event.ActionEvent evt,JFrame jFrame) {//GEN-FIRST:event_backActionPerformed
         // TODO add your handling code here:
+    	jFrame.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_backActionPerformed
 
     private void signinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signinActionPerformed
@@ -329,7 +350,8 @@ public class Info_Page_new修改 extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void setInfoPage(String name,JLabel jLabel,getPicPath picPath,int width,int height) {
+    //add the setInfoPage
+    public static void setInfoPage(String name,JLabel jLabel,getPicPath picPath,int width,int height,JFrame jFrame,String [] dvdInfo,LogonCheck logonCheck,String text1) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -359,12 +381,13 @@ public class Info_Page_new修改 extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Info_Page_new修改.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+        //String []dvdInfo = logonCheck.finDvd(name);
 
         /* Create and display the form */
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-              Info_Page_new修改 info_Page_new = new Info_Page_new修改();
+              Info_Page_new修改 info_Page_new = new Info_Page_new修改(jFrame,dvdInfo,logonCheck,name,text1);
 		      new setPicSize(name, info_Page_new.poster1, picPath, width, height);
 			  info_Page_new.setVisible(true);
             }
