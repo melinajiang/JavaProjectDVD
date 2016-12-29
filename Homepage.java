@@ -34,6 +34,7 @@ public class Homepage extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         search = new javax.swing.JButton();
         title = new javax.swing.JLabel();
+        userName = new javax.swing.JLabel();
         Panel_Hot = new javax.swing.JPanel();
         hot = new javax.swing.JLabel();
         dvd1 = new javax.swing.JLabel();
@@ -44,16 +45,22 @@ public class Homepage extends javax.swing.JFrame {
         dvdname3 = new javax.swing.JLabel();
         dvdname4 = new javax.swing.JLabel();
         dvdname2 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        dvd5 = new javax.swing.JLabel();
+        dvdname5 = new javax.swing.JLabel();
+        panel_classical = new javax.swing.JPanel();
         classical = new javax.swing.JLabel();
         dvd6 = new javax.swing.JLabel();
-        dvdname7 = new javax.swing.JLabel();
-        dvd5 = new javax.swing.JLabel();
+        dvdname6 = new javax.swing.JLabel();
         dvd7 = new javax.swing.JLabel();
-        dvdname5 = new javax.swing.JLabel();
         dvdname8 = new javax.swing.JLabel();
         dvd8 = new javax.swing.JLabel();
-        dvdname6 = new javax.swing.JLabel();
+        dvdname7 = new javax.swing.JLabel();
+        dvd9 = new javax.swing.JLabel();
+        dvdname9 = new javax.swing.JLabel();
+        dvd10 = new javax.swing.JLabel();
+        dvdname10 = new javax.swing.JLabel();
+        bottom = new javax.swing.JPanel();
+        all_movie = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -87,6 +94,8 @@ public class Homepage extends javax.swing.JFrame {
         });
 
         jTextField1.setBackground(new java.awt.Color(102, 102, 102));
+        jTextField1.setFont(new java.awt.Font("微软雅黑", 0, 12)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
         jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,11 +105,22 @@ public class Homepage extends javax.swing.JFrame {
 
         search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cn/edu/usst/search-icon25.png"))); // NOI18N
         search.setBorder(null);
+        search.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         search.setPreferredSize(new java.awt.Dimension(22, 22));
+        search.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                searchMouseMoved(evt);
+            }
+        });
 
         title.setFont(new java.awt.Font("微软雅黑", 1, 18)); // NOI18N
         title.setForeground(new java.awt.Color(255, 255, 255));
         title.setText("在线DVD租赁系统");
+
+        userName.setVisible(false);
+        userName.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        userName.setForeground(new java.awt.Color(255, 255, 255));
+        userName.setText("你好，UserName");
 
         javax.swing.GroupLayout bannerLayout = new javax.swing.GroupLayout(banner);
         banner.setLayout(bannerLayout);
@@ -109,11 +129,13 @@ public class Homepage extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bannerLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(title)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 243, Short.MAX_VALUE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(userName)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(signin, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -123,12 +145,14 @@ public class Homepage extends javax.swing.JFrame {
             bannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bannerLayout.createSequentialGroup()
                 .addContainerGap(18, Short.MAX_VALUE)
-                .addGroup(bannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(signin, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(title)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(bannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(bannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(signin, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(title)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(userName)))
                 .addGap(14, 14, 14))
         );
 
@@ -137,17 +161,13 @@ public class Homepage extends javax.swing.JFrame {
         hot.setFont(new java.awt.Font("微软雅黑", 0, 18)); // NOI18N
         hot.setText("近期热映 >");
 
-        dvd1.setText("img");
-        dvd1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        dvd1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
-        dvd2.setText("img");
-        dvd2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        dvd2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
-        dvd3.setText("img");
-        dvd3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        dvd3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
-        dvd4.setText("img");
-        dvd4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        dvd4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
         dvdname1.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         dvdname1.setText("影片名称");
@@ -161,133 +181,199 @@ public class Homepage extends javax.swing.JFrame {
         dvdname2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         dvdname2.setText("影片名称");
 
+        dvd5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+
+        dvdname5.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        dvdname5.setText("影片名称");
+
         javax.swing.GroupLayout Panel_HotLayout = new javax.swing.GroupLayout(Panel_Hot);
         Panel_Hot.setLayout(Panel_HotLayout);
         Panel_HotLayout.setHorizontalGroup(
             Panel_HotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Panel_HotLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(hot)
-                .addGap(42, 42, 42)
-                .addGroup(Panel_HotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(Panel_HotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(Panel_HotLayout.createSequentialGroup()
-                        .addComponent(dvd1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(171, 171, 171)
+                        .addComponent(dvdname1)
+                        .addGap(62, 62, 62)
+                        .addComponent(dvdname2)
+                        .addGap(62, 62, 62)
+                        .addComponent(dvdname3)
+                        .addGap(62, 62, 62)
+                        .addComponent(dvdname4)
+                        .addGap(21, 21, 21))
+                    .addGroup(Panel_HotLayout.createSequentialGroup()
+                        .addComponent(hot)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(dvd1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(dvd2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(dvd3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(dvd4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(dvd4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(Panel_HotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dvd5, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(Panel_HotLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(dvdname1)
-                        .addGap(52, 52, 52)
-                        .addComponent(dvdname2)
-                        .addGap(52, 52, 52)
-                        .addComponent(dvdname3)
-                        .addGap(52, 52, 52)
-                        .addComponent(dvdname4)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addComponent(dvdname5)
+                        .addGap(16, 16, 16)))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
+
+        Panel_HotLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {dvd1, dvd2, dvd3, dvd4, dvd5});
+
         Panel_HotLayout.setVerticalGroup(
             Panel_HotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_HotLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(hot)
-                .addGap(67, 67, 67))
-            .addGroup(Panel_HotLayout.createSequentialGroup()
-                .addGroup(Panel_HotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(dvd4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dvd3, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(Panel_HotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(dvd1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(dvd2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(Panel_HotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(dvdname1)
-                    .addComponent(dvdname3)
-                    .addComponent(dvdname4)
-                    .addComponent(dvdname2))
-                .addContainerGap())
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(Panel_HotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(Panel_HotLayout.createSequentialGroup()
+                        .addComponent(dvd5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dvdname5))
+                    .addGroup(Panel_HotLayout.createSequentialGroup()
+                        .addGroup(Panel_HotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(Panel_HotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(dvd2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(dvd3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(dvd4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(dvd1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(Panel_HotLayout.createSequentialGroup()
+                                .addGap(56, 56, 56)
+                                .addComponent(hot)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(Panel_HotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dvdname2)
+                            .addComponent(dvdname1)
+                            .addComponent(dvdname3)
+                            .addComponent(dvdname4))))
+                .addGap(218, 218, 218))
         );
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        Panel_HotLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {dvd1, dvd2, dvd3, dvd4, dvd5});
+
+        panel_classical.setBackground(new java.awt.Color(255, 255, 255));
 
         classical.setFont(new java.awt.Font("微软雅黑", 0, 18)); // NOI18N
         classical.setText("重温经典 >");
 
-        dvd6.setText("img");
-        dvd6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        dvdname7.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        dvdname7.setText("影片名称");
-
-        dvd5.setText("img");
-        dvd5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        dvd7.setText("img");
-        dvd7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        dvdname5.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        dvdname5.setText("影片名称");
-
-        dvdname8.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        dvdname8.setText("影片名称");
-
-        dvd8.setText("img");
-        dvd8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        dvd6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
         dvdname6.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         dvdname6.setText("影片名称");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+        dvd7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+
+        dvdname8.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        dvdname8.setText("影片名称");
+
+        dvd8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+
+        dvdname7.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        dvdname7.setText("影片名称");
+
+        dvd9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+
+        dvdname9.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        dvdname9.setText("影片名称");
+
+        dvd10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+
+        dvdname10.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        dvdname10.setText("影片名称");
+
+        javax.swing.GroupLayout panel_classicalLayout = new javax.swing.GroupLayout(panel_classical);
+        panel_classical.setLayout(panel_classicalLayout);
+        panel_classicalLayout.setHorizontalGroup(
+            panel_classicalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_classicalLayout.createSequentialGroup()
                 .addComponent(classical)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(dvd5, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(dvd6, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                .addGap(59, 59, 59)
+                .addGroup(panel_classicalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_classicalLayout.createSequentialGroup()
+                        .addComponent(dvd6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_classicalLayout.createSequentialGroup()
+                        .addComponent(dvdname6)
+                        .addGap(40, 40, 40)))
+                .addGroup(panel_classicalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_classicalLayout.createSequentialGroup()
                         .addComponent(dvd7, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(dvd8, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(dvdname8)
-                        .addGap(52, 52, 52)
+                    .addGroup(panel_classicalLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
                         .addComponent(dvdname7)
-                        .addGap(52, 52, 52)
-                        .addComponent(dvdname6)
-                        .addGap(52, 52, 52)
-                        .addComponent(dvdname5)))
-                .addGap(31, 31, 31))
+                        .addGap(61, 61, 61)
+                        .addComponent(dvdname8)))
+                .addGap(18, 18, 18)
+                .addGroup(panel_classicalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_classicalLayout.createSequentialGroup()
+                        .addComponent(dvd9, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(dvd10, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panel_classicalLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(dvdname9)
+                        .addGap(62, 62, 62)
+                        .addComponent(dvdname10)))
+                .addGap(0, 49, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(66, 66, 66)
-                .addComponent(classical)
+
+        panel_classicalLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {dvd10, dvd6, dvd7, dvd8, dvd9});
+
+        panel_classicalLayout.setVerticalGroup(
+            panel_classicalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_classicalLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panel_classicalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_classicalLayout.createSequentialGroup()
+                        .addGroup(panel_classicalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(dvd8, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dvd7, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dvd6, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_classicalLayout.createSequentialGroup()
+                                .addGap(58, 58, 58)
+                                .addComponent(classical)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panel_classicalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dvdname6)
+                            .addComponent(dvdname7)))
+                    .addGroup(panel_classicalLayout.createSequentialGroup()
+                        .addGroup(panel_classicalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(dvd10, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dvd9, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panel_classicalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(dvdname9)
+                            .addComponent(dvdname8)
+                            .addComponent(dvdname10))))
+                .addContainerGap())
+        );
+
+        panel_classicalLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {dvd10, dvd6, dvd7, dvd8, dvd9});
+
+        all_movie.setFont(new java.awt.Font("微软雅黑", 0, 18)); // NOI18N
+        all_movie.setText("-全部影片-");
+        all_movie.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        javax.swing.GroupLayout bottomLayout = new javax.swing.GroupLayout(bottom);
+        bottom.setLayout(bottomLayout);
+        bottomLayout.setHorizontalGroup(
+            bottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bottomLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(all_movie)
+                .addGap(365, 365, 365))
+        );
+        bottomLayout.setVerticalGroup(
+            bottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bottomLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(all_movie)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 10, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(dvd8, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dvd7, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(dvd5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(dvd6, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(dvdname8)
-                    .addComponent(dvdname6)
-                    .addComponent(dvdname5)
-                    .addComponent(dvdname7)))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -295,23 +381,26 @@ public class Homepage extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(Panel_Hot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(banner, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(banner, javax.swing.GroupLayout.DEFAULT_SIZE, 825, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(panel_classical, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Panel_Hot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(bottom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(banner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(Panel_Hot, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Panel_Hot, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(panel_classical, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addComponent(bottom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -325,7 +414,7 @@ public class Homepage extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setBounds(300, 150, 621, 439);
+        setBounds(300, 150, 841, 539);
     }// </editor-fold>//GEN-END:initComponents
 
     private void signinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signinActionPerformed
@@ -334,11 +423,22 @@ public class Homepage extends javax.swing.JFrame {
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         // TODO add your handling code here:
+        try{
+            login.setVisible(false);
+            signin.setVisible(false);
+            userName.setVisible(true);
+        }catch(Exception e){
+            
+        }
     }//GEN-LAST:event_loginActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void searchMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseMoved
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchMouseMoved
 
     /**
      * @param args the command line arguments
@@ -377,9 +477,12 @@ public class Homepage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Panel_Hot;
+    private javax.swing.JLabel all_movie;
     private javax.swing.JPanel banner;
+    private javax.swing.JPanel bottom;
     private javax.swing.JLabel classical;
     private javax.swing.JLabel dvd1;
+    private javax.swing.JLabel dvd10;
     private javax.swing.JLabel dvd2;
     private javax.swing.JLabel dvd3;
     private javax.swing.JLabel dvd4;
@@ -387,7 +490,9 @@ public class Homepage extends javax.swing.JFrame {
     private javax.swing.JLabel dvd6;
     private javax.swing.JLabel dvd7;
     private javax.swing.JLabel dvd8;
+    private javax.swing.JLabel dvd9;
     private javax.swing.JLabel dvdname1;
+    private javax.swing.JLabel dvdname10;
     private javax.swing.JLabel dvdname2;
     private javax.swing.JLabel dvdname3;
     private javax.swing.JLabel dvdname4;
@@ -395,13 +500,15 @@ public class Homepage extends javax.swing.JFrame {
     private javax.swing.JLabel dvdname6;
     private javax.swing.JLabel dvdname7;
     private javax.swing.JLabel dvdname8;
+    private javax.swing.JLabel dvdname9;
     private javax.swing.JLabel hot;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JButton login;
+    private javax.swing.JPanel panel_classical;
     private javax.swing.JButton search;
     private javax.swing.JButton signin;
     private javax.swing.JLabel title;
+    private javax.swing.JLabel userName;
     // End of variables declaration//GEN-END:variables
 }
