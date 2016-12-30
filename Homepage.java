@@ -4,17 +4,47 @@
  * and open the template in the editor.
  */
 package cn.edu.usst;
-
+import javax.imageio.*;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.UnknownHostException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 /**
  *
  * @author asus
  */
 public class Homepage extends javax.swing.JFrame {
+    static JTextField text1 ;
+    static JPasswordField pwdText;
+    static String loginName ;
+//    static JButton login;
+    static JButton signin1;
+    private static final int width=90;
+    private static final int height=130;
+    private static final int innerWidth = 200;
+    private static final int innerHeight = 280;  
+    private static getPicPath getPicPath;
+    private static  LogonCheck logonCheck;
+    private static String [] classicDVD ;
+    private static String [] hotDVD ;
+//    private static JTextField search_box;
 
     /**
      * Creates new form Homepage
      */
-    public Homepage() {
+    public Homepage() throws UnknownHostException, IOException{
+        DVDClient dvdClient=new DVDClient();
+        dvdClient.recievePic();
+        getPicPath = new getPicPath(dvdClient.getPath());
         initComponents();
     }
 
@@ -31,7 +61,7 @@ public class Homepage extends javax.swing.JFrame {
         banner = new javax.swing.JPanel();
         signin = new javax.swing.JButton();
         login = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        search_box = new javax.swing.JTextField();
         search = new javax.swing.JButton();
         title = new javax.swing.JLabel();
         userName = new javax.swing.JLabel();
@@ -63,6 +93,7 @@ public class Homepage extends javax.swing.JFrame {
         all_movie = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("在线DVD租赁系统");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -93,17 +124,17 @@ public class Homepage extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.setBackground(new java.awt.Color(102, 102, 102));
-        jTextField1.setFont(new java.awt.Font("微软雅黑", 0, 12)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        search_box.setBackground(new java.awt.Color(102, 102, 102));
+        search_box.setFont(new java.awt.Font("微软雅黑", 0, 12)); // NOI18N
+        search_box.setForeground(new java.awt.Color(255, 255, 255));
+        search_box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        search_box.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                search_boxActionPerformed(evt);
             }
         });
 
-        search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cn/edu/usst/search-icon25.png"))); // NOI18N
+        search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/search-icon25.png"))); // NOI18N
         search.setBorder(null);
         search.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         search.setPreferredSize(new java.awt.Dimension(22, 22));
@@ -112,10 +143,21 @@ public class Homepage extends javax.swing.JFrame {
                 searchMouseMoved(evt);
             }
         });
+        search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchActionPerformed(evt);
+            }
+        });
 
         title.setFont(new java.awt.Font("微软雅黑", 1, 20)); // NOI18N
         title.setForeground(new java.awt.Color(255, 255, 255));
         title.setText("在线DVD租赁系统");
+        try{
+            Image img= ImageIO.read(this.getClass().getResource("/img/logoD.png"));
+            this.setIconImage(img);
+        }catch(Exception e){
+
+        }
 
         userName.setVisible(false);
         userName.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
@@ -130,7 +172,7 @@ public class Homepage extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(title)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(search_box, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -146,12 +188,12 @@ public class Homepage extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bannerLayout.createSequentialGroup()
                 .addContainerGap(15, Short.MAX_VALUE)
                 .addGroup(bannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(search, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(bannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(signin, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(title)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(search_box, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(userName)))
                 .addGap(14, 14, 14))
         );
@@ -162,64 +204,88 @@ public class Homepage extends javax.swing.JFrame {
         hot.setText("近期热映 >");
 
         dvd1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        dvd1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dvd1MouseClicked(evt);
+            }
+        });
 
         dvd2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        dvd2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dvd2MouseClicked(evt);
+            }
+        });
 
         dvd3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        dvd3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dvd3MouseClicked(evt);
+            }
+        });
 
         dvd4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        dvd4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dvd4MouseClicked(evt);
+            }
+        });
 
         dvdname1.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        dvdname1.setText("影片名称");
+        dvdname1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dvdname1.setText(hotDVD[0]);
 
         dvdname3.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        dvdname3.setText("影片名称");
+        dvdname3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dvdname3.setText(hotDVD[2]);
 
         dvdname4.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        dvdname4.setText("影片名称");
+        dvdname4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dvdname4.setText(hotDVD[4]);
 
         dvdname2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        dvdname2.setText("影片名称");
+        dvdname2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dvdname2.setText(hotDVD[1]);
 
         dvd5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        dvd5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dvd5MouseClicked(evt);
+            }
+        });
 
         dvdname5.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        dvdname5.setText("影片名称");
+        dvdname5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dvdname5.setText(hotDVD[5]);
 
         javax.swing.GroupLayout Panel_HotLayout = new javax.swing.GroupLayout(Panel_Hot);
         Panel_Hot.setLayout(Panel_HotLayout);
         Panel_HotLayout.setHorizontalGroup(
             Panel_HotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Panel_HotLayout.createSequentialGroup()
-                .addGroup(Panel_HotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(Panel_HotLayout.createSequentialGroup()
-                        .addGap(171, 171, 171)
-                        .addComponent(dvdname1)
-                        .addGap(62, 62, 62)
-                        .addComponent(dvdname2)
-                        .addGap(62, 62, 62)
-                        .addComponent(dvdname3)
-                        .addGap(62, 62, 62)
-                        .addComponent(dvdname4)
-                        .addGap(21, 21, 21))
-                    .addGroup(Panel_HotLayout.createSequentialGroup()
-                        .addComponent(hot)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(dvd1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(dvd2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(dvd3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(dvd4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addComponent(hot)
+                .addGap(48, 48, 48)
+                .addGroup(Panel_HotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(dvdname1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dvd1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(Panel_HotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(dvdname2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dvd2, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(Panel_HotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(dvdname3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dvd3, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(Panel_HotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dvd5, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(Panel_HotLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(dvdname5)
-                        .addGap(16, 16, 16)))
-                .addContainerGap(50, Short.MAX_VALUE))
+                    .addComponent(dvd4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dvdname4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(Panel_HotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(dvdname5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dvd5, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
+                .addGap(66, 66, 66))
         );
 
         Panel_HotLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {dvd1, dvd2, dvd3, dvd4, dvd5});
@@ -230,6 +296,10 @@ public class Homepage extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(Panel_HotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Panel_HotLayout.createSequentialGroup()
+                        .addComponent(dvd4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dvdname4))
+                    .addGroup(Panel_HotLayout.createSequentialGroup()
                         .addComponent(dvd5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(dvdname5))
@@ -237,18 +307,16 @@ public class Homepage extends javax.swing.JFrame {
                         .addGroup(Panel_HotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(Panel_HotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(dvd2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(dvd3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(dvd4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(dvd3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(dvd1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(Panel_HotLayout.createSequentialGroup()
-                                .addGap(56, 56, 56)
+                                .addGap(64, 64, 64)
                                 .addComponent(hot)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(Panel_HotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(dvdname2)
                             .addComponent(dvdname1)
-                            .addComponent(dvdname3)
-                            .addComponent(dvdname4))))
+                            .addComponent(dvdname3))))
                 .addGap(218, 218, 218))
         );
 
@@ -260,66 +328,88 @@ public class Homepage extends javax.swing.JFrame {
         classical.setText("重温经典 >");
 
         dvd6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        dvd6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dvd6MouseClicked(evt);
+            }
+        });
 
         dvdname6.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        dvdname6.setText("影片名称");
+        dvdname6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dvdname6.setText(classicDVD[0]);
 
         dvd7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        dvd7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dvd7MouseClicked(evt);
+            }
+        });
 
         dvdname8.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        dvdname8.setText("影片名称");
+        dvdname8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dvdname8.setText(classicDVD[2]);
 
         dvd8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        dvd8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dvd8MouseClicked(evt);
+            }
+        });
 
         dvdname7.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        dvdname7.setText("影片名称");
+        dvdname7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dvdname7.setText(classicDVD[1]);
 
         dvd9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        dvd9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dvd9MouseClicked(evt);
+            }
+        });
 
         dvdname9.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        dvdname9.setText("影片名称");
+        dvdname9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dvdname9.setText(classicDVD[3]);
 
         dvd10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        dvd10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dvd10MouseClicked(evt);
+            }
+        });
 
         dvdname10.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        dvdname10.setText("影片名称");
+        dvdname10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dvdname10.setText(classicDVD[4]);
 
         javax.swing.GroupLayout panel_classicalLayout = new javax.swing.GroupLayout(panel_classical);
         panel_classical.setLayout(panel_classicalLayout);
         panel_classicalLayout.setHorizontalGroup(
             panel_classicalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_classicalLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(classical)
-                .addGap(59, 59, 59)
-                .addGroup(panel_classicalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panel_classicalLayout.createSequentialGroup()
-                        .addComponent(dvd6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_classicalLayout.createSequentialGroup()
-                        .addComponent(dvdname6)
-                        .addGap(40, 40, 40)))
-                .addGroup(panel_classicalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panel_classicalLayout.createSequentialGroup()
-                        .addComponent(dvd7, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(dvd8, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panel_classicalLayout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(dvdname7)
-                        .addGap(61, 61, 61)
-                        .addComponent(dvdname8)))
+                .addGap(49, 49, 49)
+                .addGroup(panel_classicalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(dvdname6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dvd6, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(panel_classicalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(dvdname7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dvd7, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(panel_classicalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panel_classicalLayout.createSequentialGroup()
-                        .addComponent(dvd9, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(dvd10, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panel_classicalLayout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(dvdname9)
-                        .addGap(62, 62, 62)
-                        .addComponent(dvdname10)))
-                .addGap(0, 49, Short.MAX_VALUE))
+                    .addComponent(dvd8, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dvdname8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(panel_classicalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dvd9, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dvdname9, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(panel_classicalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dvd10, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dvdname10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         panel_classicalLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {dvd10, dvd6, dvd7, dvd8, dvd9});
@@ -335,7 +425,7 @@ public class Homepage extends javax.swing.JFrame {
                             .addComponent(dvd7, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(dvd6, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_classicalLayout.createSequentialGroup()
-                                .addGap(58, 58, 58)
+                                .addGap(61, 61, 61)
                                 .addComponent(classical)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panel_classicalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -358,6 +448,11 @@ public class Homepage extends javax.swing.JFrame {
         all_movie.setFont(new java.awt.Font("微软雅黑", 0, 18)); // NOI18N
         all_movie.setText("-全部影片-");
         all_movie.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        all_movie.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                all_movieMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout bottomLayout = new javax.swing.GroupLayout(bottom);
         bottom.setLayout(bottomLayout);
@@ -386,7 +481,7 @@ public class Homepage extends javax.swing.JFrame {
                     .addComponent(banner, javax.swing.GroupLayout.DEFAULT_SIZE, 825, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 37, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panel_classical, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Panel_Hot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -408,7 +503,9 @@ public class Homepage extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 825, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -420,11 +517,13 @@ public class Homepage extends javax.swing.JFrame {
 
     private void signinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signinActionPerformed
         // TODO add your handling code here:
+        Homepage.setSignPage();
     }//GEN-LAST:event_signinActionPerformed
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         // TODO add your handling code here:
         try{
+            Homepage.setLoginPage();
             login.setVisible(false);
             signin.setVisible(false);
             userName.setVisible(true);
@@ -433,23 +532,319 @@ public class Homepage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_loginActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void search_boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_boxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+        String [] dvdInfo = logonCheck.finDvd(search_box.getText());
+	Info_Page_new.setInfoPage(dvdname1.getText(), dvd1, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
+    }//GEN-LAST:event_search_boxActionPerformed
 
     private void searchMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseMoved
         // TODO add your handling code here:
     }//GEN-LAST:event_searchMouseMoved
 
+    private void all_movieMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_all_movieMouseClicked
+        // TODO add your handling code here:
+        All_Movie am = new All_Movie();
+        this.setVisible(false);
+        am.setVisible(true);
+    }//GEN-LAST:event_all_movieMouseClicked
+
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchActionPerformed
+
+    private void dvd1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dvd1MouseClicked
+        // TODO add your handling code here:
+        String []dvdInfo = new String[3];
+        dvdInfo = logonCheck.finDvd(dvdname1.getText());
+        Info_Page_new.setInfoPage(dvdname1.getText(), dvd1, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
+    }//GEN-LAST:event_dvd1MouseClicked
+
+    private void dvd2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dvd2MouseClicked
+        // TODO add your handling code here:
+        String []dvdInfo = new String[3];
+        dvdInfo = logonCheck.finDvd(dvdname2.getText());
+        Info_Page_new.setInfoPage(dvdname2.getText(), dvd2, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
+    }//GEN-LAST:event_dvd2MouseClicked
+
+    private void dvd3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dvd3MouseClicked
+        // TODO add your handling code here:
+        String []dvdInfo = new String[3];
+        dvdInfo = logonCheck.finDvd(dvdname3.getText());
+        Info_Page_new.setInfoPage(dvdname3.getText(), dvd3, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
+    }//GEN-LAST:event_dvd3MouseClicked
+
+    private void dvd4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dvd4MouseClicked
+        // TODO add your handling code here:
+        String []dvdInfo = new String[3];
+        dvdInfo = logonCheck.finDvd(dvdname4.getText());
+        Info_Page_new.setInfoPage(dvdname4.getText(), dvd4, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
+    }//GEN-LAST:event_dvd4MouseClicked
+
+    private void dvd5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dvd5MouseClicked
+        // TODO add your handling code here:
+        String []dvdInfo = new String[3];
+        dvdInfo = logonCheck.finDvd(dvdname5.getText());
+        Info_Page_new.setInfoPage(dvdname5.getText(), dvd5, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
+    }//GEN-LAST:event_dvd5MouseClicked
+
+    private void dvd6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dvd6MouseClicked
+        // TODO add your handling code here:
+        String []dvdInfo = new String[3];
+        dvdInfo = logonCheck.finDvd(dvdname6.getText());
+        Info_Page_new.setInfoPage(dvdname6.getText(), dvd6, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
+    }//GEN-LAST:event_dvd6MouseClicked
+
+    private void dvd7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dvd7MouseClicked
+        // TODO add your handling code here:
+        String []dvdInfo = new String[3];
+        dvdInfo = logonCheck.finDvd(dvdname7.getText());
+        Info_Page_new.setInfoPage(dvdname7.getText(), dvd7, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
+    }//GEN-LAST:event_dvd7MouseClicked
+
+    private void dvd8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dvd8MouseClicked
+        // TODO add your handling code here:
+        String []dvdInfo = new String[3];
+        dvdInfo = logonCheck.finDvd(dvdname8.getText());
+        Info_Page_new.setInfoPage(dvdname8.getText(), dvd8, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
+    }//GEN-LAST:event_dvd8MouseClicked
+
+    private void dvd9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dvd9MouseClicked
+        // TODO add your handling code here:
+        String []dvdInfo = new String[3];
+        dvdInfo = logonCheck.finDvd(dvdname9.getText());
+        Info_Page_new.setInfoPage(dvdname9.getText(), dvd9, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
+    }//GEN-LAST:event_dvd9MouseClicked
+
+    private void dvd10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dvd10MouseClicked
+        // TODO add your handling code here:
+        String []dvdInfo = new String[3];
+        dvdInfo = logonCheck.finDvd(dvdname10.getText());
+        Info_Page_new.setInfoPage(dvdname10.getText(), dvd10, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
+    }//GEN-LAST:event_dvd10MouseClicked
+
+    //加载注册页面的方法
+public static void setSignPage() {
+text1 = new JTextField();
+	//loginName = "hi";
+	JFrame frame= new JFrame("sign in ");
+	frame.setBounds(500,200,250,300);
+	frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+    frame.setVisible(true);
+    frame.setLayout(null);
+    //frm.setVisible(false);
+
+    JLabel label6 = new JLabel("注册");
+    label6.setBounds(107,40,50,25);
+    frame.getContentPane().add(label6);
+
+
+    text1.setHorizontalAlignment(JTextField.LEFT);
+    text1.setBounds(60,70,120,30);
+    frame.getContentPane().add(text1);
+    text1.addActionListener(new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			System.out.println("login name "+text1.getText());
+			loginName = text1.getText();
+
+		}
+
+	});
+
+    pwdText= new JPasswordField();
+    pwdText.setText("mypassword");
+    pwdText.setEchoChar('*');
+    pwdText.setBounds(60,107,120,30);
+    frame.getContentPane().add(pwdText);
+    pwdText.addActionListener(new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			String pwString = String.valueOf(pwdText.getPassword());
+			System.out.println("login pw "+ pwString);
+		}
+	});
+
+
+	    JButton button3 = new JButton();
+	    button3.setText("OK");
+	    button3.setBounds(140,150,50,25);
+	    frame.getContentPane().add(button3);
+	    button3.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String pwString = String.valueOf(pwdText.getPassword());
+
+				logonCheck.register(text1.getText(), pwString);
+
+
+				Homepage.setLoginPageSuccess(true);
+			}
+		});
+
+}
+    //this is the method to show the login page.
+//加载登录页面的方法，并监听是否登录成功。
+public static void  setLoginPage() {
+
+	text1 = new JTextField();
+	
+	//loginName = "hi";
+	JFrame frame= new JFrame("login");
+	frame.setBounds(500,200,250,300);
+	frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+    frame.setVisible(true);
+    frame.setLayout(null);			   
+    //frm.setVisible(false);
+
+    JLabel label6 = new JLabel("登陆");
+    label6.setBounds(107,40,50,25);
+    frame.getContentPane().add(label6);
+   
+    
+    text1.setHorizontalAlignment(JTextField.LEFT);
+    text1.setBounds(60,70,120,30);
+    frame.getContentPane().add(text1);
+    text1.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			System.out.println("login name "+text1.getText()); 
+			//loginName = text1.getText();
+			
+		}
+	
+	});
+    
+    pwdText= new JPasswordField();
+    pwdText.setText("mypassword");
+    pwdText.setEchoChar('*');
+    pwdText.setBounds(60,107,120,30);
+    frame.getContentPane().add(pwdText);
+    pwdText.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			String pwString = String.valueOf(pwdText.getPassword());
+			System.out.println("login pw "+ pwString);
+		}
+	});
+	  
+	    
+	    JButton button3 = new JButton();
+	    button3.setText("OK");
+	    button3.setBounds(140,150,50,25);
+	    frame.getContentPane().add(button3);
+	    button3.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				boolean checkLogin = false;
+                                String pwString = String.valueOf(pwdText.getPassword()); // TODO Auto-generated catch block
+                                checkLogin = logonCheck.loginCheck(text1.getText(),pwString);
+				//resetBanner();
+				Homepage.setLoginPageSuccess(checkLogin);
+				
+			}
+		});
+	
+	    
+}
+//this is the method that listen the login name is vaild or not
+//此方法监听是否登录成功。
+public  void loginListener() {
+	while (true) {
+	System.out.println("wait input");
+	if (!(loginName.equals("hi")) ) {
+	System.out.println("resset");
+	resetBanner();
+	System.out.println(text1.getText());
+	System.out.println(pwdText.getPassword().toString());
+	break;
+	}
+
+	}
+}
+//this is the method that reset banner ,addding the login name if login success.
+//此方法reset banner， 若登录成功增加用户名。
+public  void  resetBanner() {
+	System.out.println(loginName);
+	JLabel label5 = new JLabel(loginName);
+	this.getContentPane().add(label5);
+	label5.setBounds(510,0,100,25);
+	label5.setVisible(true);
+	login.setVisible(false);
+	signin1.setVisible(false);
+
+	}
+// this is the method return login name
+//返回用户名
+public static String returnLoginName() {
+	return loginName;
+	// TODO Auto-generated method stub
+	
+}
+
+//this is the method visit the data base to check login success or not , and show the page to address u if successed or not
+//此方法去数据库检查是否登录成功，成功加载登录成功，失败加载登录失败。
+public static void setLoginPageSuccess(boolean loginSuccess){
+	if (loginSuccess) {
+		JFrame frame= new JFrame("LOGIN INFO");
+		frame.setBounds(500,200,400,130);
+		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+	    frame.setVisible(true);
+	    frame.setLayout(null);
+	    
+	    JLabel label1 = new JLabel("Login success or sign in sucess！");
+	    label1.setBounds(100,30,150,25);
+	    frame.getContentPane().add(label1);
+	    
+	    JButton button1 = new JButton();
+	    button1.setText("back");
+	    button1.setBounds(250,60,80,25);
+	    frame.getContentPane().add(button1);
+	    button1.setVisible(true);
+	    
+	    loginName = text1.getText();
+	}
+	else {
+		JFrame frame= new JFrame("LOGIN INFO");
+		frame.setBounds(500,200,400,130);
+		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+	    frame.setVisible(true);
+	    frame.setLayout(null);
+	    
+	    JLabel label1 = new JLabel("login failed OR haven't login ！");
+	    label1.setBounds(100,30,150,25);
+	    frame.getContentPane().add(label1);
+	    
+	    JButton button1 = new JButton();
+	    button1.setText("back");
+	    button1.setBounds(250,60,80,25);
+	    frame.getContentPane().add(button1);
+	    button1.setVisible(true);
+	}	
+}
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws IOException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
+        loginName = "hi";
+    	logonCheck =new LogonCheck();
+    	classicDVD = logonCheck.finClassicDvd();
+    	hotDVD = logonCheck.findHotDvd();
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -467,11 +862,18 @@ public class Homepage extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Homepage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        Homepage homepage=new Homepage();
+        homepage.setVisible(true); 	
+        homepage.loginListener();
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Homepage().setVisible(true);
+                try {
+                    new Homepage().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -504,10 +906,10 @@ public class Homepage extends javax.swing.JFrame {
     private javax.swing.JLabel dvdname9;
     private javax.swing.JLabel hot;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton login;
     private javax.swing.JPanel panel_classical;
     private javax.swing.JButton search;
+    private javax.swing.JTextField search_box;
     private javax.swing.JButton signin;
     private javax.swing.JLabel title;
     private javax.swing.JLabel userName;
