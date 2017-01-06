@@ -1,47 +1,61 @@
+package com.usst.pages;
+
+import java.awt.Image;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cn.edu.usst;
-import javax.imageio.*;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.imageio.ImageIO;
+import javax.sound.midi.MidiDevice.Info;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import com.usst.db.LogonCheck;
+
+import dvdSockets.DVDClient;
+import dvdSockets.Info_Page_new修改;
+import dvdSockets.getPicPath;
+import dvdSockets.setPicSize;
+
 /**
  *
  * @author asus
  */
-public class Homepage extends javax.swing.JFrame {
+public class HomePage_test2 extends javax.swing.JFrame {
     static JTextField text1 ;
     static JPasswordField pwdText;
     static String loginName ;
 //    static JButton login;
     static JButton signin1;
-    private static final int width=90;
-    private static final int height=130;
-    private static final int innerWidth = 200;
-    private static final int innerHeight = 280;  
+    private static final int width=100;
+    private static final int height=140;
+    private static final int innerWidth = 246;
+    private static final int innerHeight = 345;  
     private static getPicPath getPicPath;
     private static  LogonCheck logonCheck;
     private static String [] classicDVD ;
     private static String [] hotDVD ;
+    private static JLabel userName1;
 //    private static JTextField search_box;
 
     /**
      * Creates new form Homepage
      */
-    public Homepage() throws UnknownHostException, IOException{
+    public HomePage_test2() throws UnknownHostException, IOException{
         DVDClient dvdClient=new DVDClient();
         dvdClient.recievePic();
         getPicPath = new getPicPath(dvdClient.getPath());
@@ -64,7 +78,7 @@ public class Homepage extends javax.swing.JFrame {
         search_box = new javax.swing.JTextField();
         search = new javax.swing.JButton();
         title = new javax.swing.JLabel();
-        userName = new javax.swing.JLabel();
+        userName1 = new javax.swing.JLabel();
         Panel_Hot = new javax.swing.JPanel();
         hot = new javax.swing.JLabel();
         dvd1 = new javax.swing.JLabel();
@@ -159,11 +173,11 @@ public class Homepage extends javax.swing.JFrame {
 
         }
 
-        userName.setVisible(false);
-        userName.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        userName.setForeground(new java.awt.Color(255, 255, 255));
-        userName.setText("你好，UserName");
-
+        userName1.setVisible(false);
+        userName1.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        userName1.setForeground(new java.awt.Color(255, 255, 255));
+        userName1.setText("你好，UserName");
+        
         javax.swing.GroupLayout bannerLayout = new javax.swing.GroupLayout(banner);
         banner.setLayout(bannerLayout);
         bannerLayout.setHorizontalGroup(
@@ -176,7 +190,7 @@ public class Homepage extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(userName)
+                .addComponent(userName1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -194,7 +208,7 @@ public class Homepage extends javax.swing.JFrame {
                         .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(title)
                         .addComponent(search_box, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(userName)))
+                        .addComponent(userName1)))
                 .addGap(14, 14, 14))
         );
 
@@ -202,35 +216,7 @@ public class Homepage extends javax.swing.JFrame {
 
         hot.setFont(new java.awt.Font("微软雅黑", 0, 18)); // NOI18N
         hot.setText("近期热映 >");
-
-        dvd1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        dvd1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                dvd1MouseClicked(evt);
-            }
-        });
-
-        dvd2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        dvd2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                dvd2MouseClicked(evt);
-            }
-        });
-
-        dvd3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        dvd3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                dvd3MouseClicked(evt);
-            }
-        });
-
-        dvd4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        dvd4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                dvd4MouseClicked(evt);
-            }
-        });
-
+        
         dvdname1.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         dvdname1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         dvdname1.setText(hotDVD[0]);
@@ -247,16 +233,52 @@ public class Homepage extends javax.swing.JFrame {
         dvdname2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         dvdname2.setText(hotDVD[1]);
 
+        dvdname5.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        dvdname5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dvdname5.setText(hotDVD[5]);
+
+        dvd1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        new setPicSize(dvdname1.getText(), dvd1, getPicPath, width, height);
+        dvd1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dvd1MouseClicked(evt);
+            }
+        });
+
+        dvd2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        new setPicSize(dvdname2.getText(), dvd2, getPicPath, width, height);
+        dvd2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dvd2MouseClicked(evt);
+            }
+        });
+
+        dvd3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        new setPicSize(dvdname3.getText(), dvd3, getPicPath, width, height);
+        dvd3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dvd3MouseClicked(evt);
+            }
+        });
+
+        dvd4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        new setPicSize(dvdname4.getText(), dvd4, getPicPath, width, height);
+        dvd4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dvd4MouseClicked(evt);
+            }
+        });
+
+       
         dvd5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        new setPicSize(dvdname5.getText(), dvd5, getPicPath, width, height);
         dvd5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 dvd5MouseClicked(evt);
             }
         });
 
-        dvdname5.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        dvdname5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        dvdname5.setText(hotDVD[5]);
+        
 
         javax.swing.GroupLayout Panel_HotLayout = new javax.swing.GroupLayout(Panel_Hot);
         Panel_Hot.setLayout(Panel_HotLayout);
@@ -327,60 +349,72 @@ public class Homepage extends javax.swing.JFrame {
         classical.setFont(new java.awt.Font("微软雅黑", 0, 18)); // NOI18N
         classical.setText("重温经典 >");
 
+        dvdname6.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        dvdname6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dvdname6.setText(classicDVD[0]);
+        
+        dvdname7.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        dvdname7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dvdname7.setText(classicDVD[1]);
+
+        dvdname8.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        dvdname8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dvdname8.setText(classicDVD[2]);
+
+
+        dvdname9.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        dvdname9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dvdname9.setText(classicDVD[3]);
+
+        dvdname10.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        dvdname10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dvdname10.setText(classicDVD[4]);
+        
         dvd6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        new setPicSize(dvdname6.getText(), dvd6, getPicPath, width, height);
         dvd6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 dvd6MouseClicked(evt);
             }
         });
 
-        dvdname6.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        dvdname6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        dvdname6.setText(classicDVD[0]);
+       
 
         dvd7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        new setPicSize(dvdname7.getText(), dvd7, getPicPath, width, height);
         dvd7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 dvd7MouseClicked(evt);
             }
         });
 
-        dvdname8.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        dvdname8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        dvdname8.setText(classicDVD[2]);
-
         dvd8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        new setPicSize(dvdname8.getText(), dvd8, getPicPath, width, height);
         dvd8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 dvd8MouseClicked(evt);
             }
         });
 
-        dvdname7.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        dvdname7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        dvdname7.setText(classicDVD[1]);
+       
 
         dvd9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        new setPicSize(dvdname9.getText(), dvd9, getPicPath, width, height);
         dvd9.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 dvd9MouseClicked(evt);
             }
         });
 
-        dvdname9.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        dvdname9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        dvdname9.setText(classicDVD[3]);
-
         dvd10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        new setPicSize(dvdname10.getText(), dvd10, getPicPath, width, height);
         dvd10.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 dvd10MouseClicked(evt);
             }
         });
 
-        dvdname10.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        dvdname10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        dvdname10.setText(classicDVD[4]);
+  
 
         javax.swing.GroupLayout panel_classicalLayout = new javax.swing.GroupLayout(panel_classical);
         panel_classical.setLayout(panel_classicalLayout);
@@ -517,16 +551,14 @@ public class Homepage extends javax.swing.JFrame {
 
     private void signinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signinActionPerformed
         // TODO add your handling code here:
-        Homepage.setSignPage();
+        HomePage_test2.setSignPage();
     }//GEN-LAST:event_signinActionPerformed
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         // TODO add your handling code here:
         try{
-            Homepage.setLoginPage();
-            login.setVisible(false);
-            signin.setVisible(false);
-            userName.setVisible(true);
+           HomePage_test2.setLoginPage();
+           
         }catch(Exception e){
             
         }
@@ -535,7 +567,7 @@ public class Homepage extends javax.swing.JFrame {
     private void search_boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_boxActionPerformed
         // TODO add your handling code here:
         String [] dvdInfo = logonCheck.finDvd(search_box.getText());
-	Info_Page_new.setInfoPage(dvdname1.getText(), dvd1, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
+	Info_Page_new修改.setInfoPage(search_box.getText(), dvd1, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
     }//GEN-LAST:event_search_boxActionPerformed
 
     private void searchMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseMoved
@@ -544,8 +576,8 @@ public class Homepage extends javax.swing.JFrame {
 
     private void all_movieMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_all_movieMouseClicked
         // TODO add your handling code here:
-        All_Movie am = new All_Movie();
-        this.setVisible(false);
+        All_Movie am = new All_Movie(getPicPath,width,height,loginName);
+        am.setBounds(275, 125, 825, 539);
         am.setVisible(true);
     }//GEN-LAST:event_all_movieMouseClicked
 
@@ -556,71 +588,74 @@ public class Homepage extends javax.swing.JFrame {
     private void dvd1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dvd1MouseClicked
         // TODO add your handling code here:
         String []dvdInfo = new String[3];
-        dvdInfo = logonCheck.finDvd(dvdname1.getText());
-        Info_Page_new.setInfoPage(dvdname1.getText(), dvd1, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
+        dvdInfo = logonCheck.finDvd(dvdname1.getText());        
+        Info_Page_new_.setInfoPage(dvdname1.getText(), dvd1, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
+     
+       
+
     }//GEN-LAST:event_dvd1MouseClicked
 
     private void dvd2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dvd2MouseClicked
         // TODO add your handling code here:
         String []dvdInfo = new String[3];
         dvdInfo = logonCheck.finDvd(dvdname2.getText());
-        Info_Page_new.setInfoPage(dvdname2.getText(), dvd2, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
+        Info_Page_new_.setInfoPage(dvdname2.getText(), dvd2, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
     }//GEN-LAST:event_dvd2MouseClicked
 
     private void dvd3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dvd3MouseClicked
         // TODO add your handling code here:
         String []dvdInfo = new String[3];
         dvdInfo = logonCheck.finDvd(dvdname3.getText());
-        Info_Page_new.setInfoPage(dvdname3.getText(), dvd3, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
+        Info_Page_new_.setInfoPage(dvdname3.getText(), dvd3, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
     }//GEN-LAST:event_dvd3MouseClicked
 
     private void dvd4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dvd4MouseClicked
         // TODO add your handling code here:
         String []dvdInfo = new String[3];
         dvdInfo = logonCheck.finDvd(dvdname4.getText());
-        Info_Page_new.setInfoPage(dvdname4.getText(), dvd4, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
+        Info_Page_new_.setInfoPage(dvdname4.getText(), dvd4, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
     }//GEN-LAST:event_dvd4MouseClicked
 
     private void dvd5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dvd5MouseClicked
         // TODO add your handling code here:
         String []dvdInfo = new String[3];
         dvdInfo = logonCheck.finDvd(dvdname5.getText());
-        Info_Page_new.setInfoPage(dvdname5.getText(), dvd5, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
+        Info_Page_new_.setInfoPage(dvdname5.getText(), dvd5, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
     }//GEN-LAST:event_dvd5MouseClicked
 
     private void dvd6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dvd6MouseClicked
         // TODO add your handling code here:
         String []dvdInfo = new String[3];
         dvdInfo = logonCheck.finDvd(dvdname6.getText());
-        Info_Page_new.setInfoPage(dvdname6.getText(), dvd6, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
+        Info_Page_new_.setInfoPage(dvdname6.getText(), dvd6, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
     }//GEN-LAST:event_dvd6MouseClicked
 
     private void dvd7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dvd7MouseClicked
         // TODO add your handling code here:
         String []dvdInfo = new String[3];
         dvdInfo = logonCheck.finDvd(dvdname7.getText());
-        Info_Page_new.setInfoPage(dvdname7.getText(), dvd7, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
+        Info_Page_new_.setInfoPage(dvdname7.getText(), dvd7, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
     }//GEN-LAST:event_dvd7MouseClicked
 
     private void dvd8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dvd8MouseClicked
         // TODO add your handling code here:
         String []dvdInfo = new String[3];
         dvdInfo = logonCheck.finDvd(dvdname8.getText());
-        Info_Page_new.setInfoPage(dvdname8.getText(), dvd8, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
+        Info_Page_new_.setInfoPage(dvdname8.getText(), dvd8, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
     }//GEN-LAST:event_dvd8MouseClicked
 
     private void dvd9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dvd9MouseClicked
         // TODO add your handling code here:
         String []dvdInfo = new String[3];
         dvdInfo = logonCheck.finDvd(dvdname9.getText());
-        Info_Page_new.setInfoPage(dvdname9.getText(), dvd9, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
+        Info_Page_new_.setInfoPage(dvdname9.getText(), dvd9, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
     }//GEN-LAST:event_dvd9MouseClicked
 
     private void dvd10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dvd10MouseClicked
         // TODO add your handling code here:
         String []dvdInfo = new String[3];
         dvdInfo = logonCheck.finDvd(dvdname10.getText());
-        Info_Page_new.setInfoPage(dvdname10.getText(), dvd10, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
+        Info_Page_new_.setInfoPage(dvdname10.getText(), dvd10, getPicPath, innerWidth, innerHeight, dvdInfo, logonCheck, loginName);
     }//GEN-LAST:event_dvd10MouseClicked
 
     //加载注册页面的方法
@@ -683,7 +718,8 @@ text1 = new JTextField();
 				logonCheck.register(text1.getText(), pwString);
 
 
-				Homepage.setLoginPageSuccess(true);
+				HomePage_test2.setLoginPageSuccess(true);
+				frame.setVisible(false);
 			}
 		});
 
@@ -696,7 +732,7 @@ public static void  setLoginPage() {
 	
 	//loginName = "hi";
 	JFrame frame= new JFrame("login");
-	frame.setBounds(500,200,250,300);
+	frame.setBounds(550,200,250,300);
 	frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     frame.setVisible(true);
     frame.setLayout(null);			   
@@ -748,10 +784,15 @@ public static void  setLoginPage() {
 			public void actionPerformed(ActionEvent e) {
 				boolean checkLogin = false;
                                 String pwString = String.valueOf(pwdText.getPassword()); // TODO Auto-generated catch block
-                                checkLogin = logonCheck.loginCheck(text1.getText(),pwString);
+                                try {
+									checkLogin = logonCheck.loginCheck(text1.getText(),pwString);
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
 				//resetBanner();
-				Homepage.setLoginPageSuccess(checkLogin);
-				
+				HomePage_test2.setLoginPageSuccess(checkLogin);
+				frame.setVisible(false);
 			}
 		});
 	
@@ -776,12 +817,44 @@ public  void loginListener() {
 //此方法reset banner， 若登录成功增加用户名。
 public  void  resetBanner() {
 	System.out.println(loginName);
-	JLabel label5 = new JLabel(loginName);
-	this.getContentPane().add(label5);
-	label5.setBounds(510,0,100,25);
-	label5.setVisible(true);
-	login.setVisible(false);
-	signin1.setVisible(false);
+	 login.setVisible(false);
+     signin.setVisible(false);
+     userName1.setText("Hello ,"+loginName);
+     userName1.setVisible(true);
+     userName1.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				User_Page.setPersonalPage(loginName);
+			}
+		});
+
+	//signin1.setVisible(false);
 
 	}
 // this is the method return login name
@@ -797,7 +870,7 @@ public static String returnLoginName() {
 public static void setLoginPageSuccess(boolean loginSuccess){
 	if (loginSuccess) {
 		JFrame frame= new JFrame("LOGIN INFO");
-		frame.setBounds(500,200,400,130);
+		frame.setBounds(530,400,400,130);
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 	    frame.setVisible(true);
 	    frame.setLayout(null);
@@ -811,6 +884,14 @@ public static void setLoginPageSuccess(boolean loginSuccess){
 	    button1.setBounds(250,60,80,25);
 	    frame.getContentPane().add(button1);
 	    button1.setVisible(true);
+	    button1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				frame.setVisible(false);
+			}
+		});
 	    
 	    loginName = text1.getText();
 	}
@@ -853,27 +934,24 @@ public static void setLoginPageSuccess(boolean loginSuccess){
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Homepage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HomePage_test2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Homepage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HomePage_test2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Homepage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HomePage_test2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Homepage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HomePage_test2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        Homepage homepage=new Homepage();
+        HomePage_test2 homepage=new HomePage_test2();
+        homepage.setBounds(275, 125, 825, 539);
         homepage.setVisible(true); 	
         homepage.loginListener();
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try {
-                    new Homepage().setVisible(true);
-                } catch (IOException ex) {
-                    Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                
             }
         });
     }
@@ -915,3 +993,4 @@ public static void setLoginPageSuccess(boolean loginSuccess){
     private javax.swing.JLabel userName;
     // End of variables declaration//GEN-END:variables
 }
+
